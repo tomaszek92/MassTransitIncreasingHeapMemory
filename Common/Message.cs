@@ -1,3 +1,3 @@
 ﻿namespace Common;
 
-public record Message();
+public record Message(DateTime TimeStamp);
