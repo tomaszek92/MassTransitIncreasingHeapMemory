@@ -15,6 +15,7 @@ var host = new HostBuilder()
                     rabbitMqHostConfigurator.Username("guest");
                     rabbitMqHostConfigurator.Password("guest");
                     rabbitMqHostConfigurator.PublisherConfirmation = false;
+                    // rabbitMqHostConfigurator.RequestedChannelMax(1);
                 });
 
                 rabbitMqBusFactoryConfigurator.ConfigureEndpoints(context);
@@ -34,7 +35,14 @@ _ = Task.Run(async () =>
     while (running)
     {
         var message = new Message(DateTime.Now);
-        await publishEndpoint.Publish(message);
+        try
+        {
+            await publishEndpoint.Publish(message);
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine(e);
+        }
     }
 });
 
